@@ -1,0 +1,51 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js 18
+        run: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install -y nodejs
+
+      - name: Install dependencies
+        run: npm install
+          
+      - name: Build
+        run: |
+              node minify.js
+
+      - name: Generate tag
+        id: tag
+        run: |
+          TAG="v$(date +%Y%m%d%H%M%S)"
+          echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+
+      - name: Create and push tag
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git tag ${{ steps.tag.outputs.tag }}
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git refs/tags/${{ steps.tag.outputs.tag }}
+
+      - name: Generate a release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.tag.outputs.tag }}
+          name: Release ${{ steps.tag.outputs.tag }}
+          body: |
+            Automatic release generated from GitHub Actions.
+          files: build/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

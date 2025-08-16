@@ -1,0 +1,8 @@
+{
+  "version": "1.0.0",
+  "author": "dell-optiplex-790",
+  "license": "MIT",
+  "devDependencies": {
+    "terser": "latest"
+  }
+}
