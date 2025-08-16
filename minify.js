@@ -20,7 +20,7 @@ var config = {
     mangle: {
         properties: {
             keep_quoted: true,
-            reserved: ["internal", "jUtils", "thisBuild", "redefine", "callee", "_m", "getModules", "remove", "buildDate", "version"]
+            reserved: ["internal", "jUtils", "thisBuild", "redefine", "callee", "_m", "getModules", "remove", "buildDate", "version", "name"]
         },
     },
     nameCache: undefined,
