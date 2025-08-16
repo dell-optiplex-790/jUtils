@@ -19,6 +19,9 @@ jobs:
       - name: Set up Node.js 18
         run: curl -fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash - && sudo apt install -y nodejs
 
+      - name: Install JSON parser
+        run: sudo apt-get install jq -y
+
       - name: Install dependencies
         run: npm install
           
@@ -26,11 +29,12 @@ jobs:
         run: |
               node minify.js
 
-      - name: Generate tag
+      - name: Generate tag and get version
         id: tag
         run: |
           TAG="v$(date +%Y%m%d%H%M%S)"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
+          echo "version=$(cat package.json | jq-windows-amd64.exe -r .version)" >> "$GITHUB_OUTPUT"
 
       - name: Create and push tag
         env:
@@ -43,7 +47,7 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
-          name: Release ${{ steps.tag.outputs.tag }}
+          name: Release ${{ steps.tag.outputs.tag }} (version ${{ steps.tag.outputs.version }})
           body: |
             Automatic release generated from GitHub Actions.
           files: build/*
