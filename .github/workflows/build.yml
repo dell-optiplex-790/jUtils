@@ -34,7 +34,7 @@ jobs:
         run: |
           TAG="v$(date +%Y%m%d%H%M%S)"
           echo "tag=$TAG" >> "$GITHUB_OUTPUT"
-          echo "version=$(cat package.json | jq-windows-amd64.exe -r .version)" >> "$GITHUB_OUTPUT"
+          echo "version=$(cat package.json | jq -r .version)" >> "$GITHUB_OUTPUT"
 
       - name: Create and push tag
         env:
