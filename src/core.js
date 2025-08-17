@@ -9,16 +9,15 @@ function jUtilsInit() {
             return false;
         }
         this[name] = function() {
-            return this[arguments.callee._name].func.apply(null, arguments);
+            return arguments.callee.func.apply(null, arguments);
         };
         this[name].func = func;
         this[name].redefine = function(newFunc) {
-            this[arguments.callee._name].func = newFunc;
+            arguments.callee.func = newFunc;
         }
         this[name].toString = function() {
             return this.func.toString();
         }
-        this[name]._name = name; // fix empty name
         this.internal.modulesList.push(name);
         return this;
     };
@@ -71,3 +70,4 @@ if(typeof module == "undefined") {
 }
 
 context.jUtils = new jUtilsInit();
+var context_jUtils = context.jUtils; // terser go brrr

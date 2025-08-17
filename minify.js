@@ -7,6 +7,7 @@ if(process.argv[2]) {
     modules = process.argv[2].split(';').filter(e=>e!='core');
 } else {
     modules = fs.readdirSync('src/modules').map(e => e.slice(0,-3));
+    console.warn('Warning: All modules are included. While this is great for a universal jUtils build, please consider only including the modules used in the codebase to reduce filesize.')
 }
 
 if(!fs.existsSync('build')) {
@@ -54,13 +55,20 @@ Object.keys(vars).map(e=>{
 })
 
 modules.forEach((e) => {
-    code['src/modules/'+e+'.js'] = config.format.preamble + '\n\n' + fs.readFileSync(`src/modules/${e}.js`, 'utf8')
+    if(!fs.existsSync(`src/modules/${e}.js`)) {
+        console.warn('Warning: the module ' + e + ' does not exist. As a result, it will not be included.')
+    } else {
+        console.log('Including module: ' + e)
+        code['src/modules/'+e+'.js'] = config.format.preamble + '\n\n' + fs.readFileSync(`src/modules/${e}.js`, 'utf8')
+    }
 })
 
+console.log('Minifying: generating a production version of jUtils...')
 fs.writeFileSync('build/jUtils.min.js', minify_sync(
     code, {...config, compress: {...(config.compress), drop_console: true}}
 ).code, 'utf8')
 
+console.log('Minifying: generating a development version of jUtils...')
 var dev = minify_sync(
     code, {...config, sourceMap: {
         includeSources: true

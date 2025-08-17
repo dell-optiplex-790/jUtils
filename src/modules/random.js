@@ -1,4 +1,4 @@
-context.jUtils.add("random", function(min, max) {
+context_jUtils.add("random", function(min, max) {
     var invalidNumStr = "The [x] number of the range is invalid or unspecified"
 
     if(typeof min != "number") {

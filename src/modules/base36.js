@@ -1,4 +1,4 @@
-context.jUtils.add("base36", function(action, str) {
+context_jUtils.add("base36", function(action, str) {
     if(!(typeof action == "string" && typeof str == "string")) {
         console.error("One or more of the arguments is invalid. Please refer to base36's documentation.")
         return false;

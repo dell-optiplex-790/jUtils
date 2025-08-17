@@ -4,7 +4,7 @@
 jUtils is a pure-ES5 utility library, which aims for a small file size and is platform-independent.
 
 ## Core APIs
-1. `jUtils.add("moduleName", moduleFunction)` - Creates a module with the name moduleName. For examples, please look in `src/modules` (don't use `context.jUtils` instead of `jUtils` unless you're adding a module to the source code's `src/modules` folder). When called (for example `jUtils.moduleName()`), the arguments will be passed along to `jUtils.moduleName.func` (`moduleFunction`).  Here are the properties of a module (internal ones excluded!):
+1. `jUtils.add(moduleName: String, moduleFunction: Function): Object | false` - Creates a module with the name moduleName. For examples, please look in `src/modules` (don't use `context_jUtils` instead of `jUtils` unless you're adding a module to the source code's `src/modules` folder). When called (for example `jUtils.moduleName()`), the arguments will be passed along to `jUtils.moduleName.func` (`moduleFunction`).  Here are the properties of a module (internal ones excluded!):
     1. `.toString()` - Returns the module's code
     2. `.redefine(newFunc)` - Replaces the module's code. This will rarely be used.
 
