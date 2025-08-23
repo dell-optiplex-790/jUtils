@@ -1,4 +1,4 @@
-context.jUtils.add("includes", function(string, query, caseSensitive) {
+context_jUtils.add("includes", function(string, query, caseSensitive) {
 
     // this could've been two ifs if i wanted clean code, but at this point it has turned into code golfing
     if(!(typeof string == "string" && typeof query == "string")) {
