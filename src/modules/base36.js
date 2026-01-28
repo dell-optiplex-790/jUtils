@@ -8,7 +8,11 @@ context_jUtils.add("base36", function(action, str) {
         var b = "";
         for(var i = 0; i < a.length; i++) {
             var r = a[i].charCodeAt().toString(36);
-            b += '0'.repeat(2-r.length) + r
+            var p = '';
+            for(var j = 0; j < (2 - r.length); j++) {
+                b += '0';
+            }
+            b += r
         }
         return b;
     } else if(action == "decode") {
