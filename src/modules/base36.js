@@ -8,7 +8,6 @@ context_jUtils.add("base36", function(action, str) {
         var b = "";
         for(var i = 0; i < a.length; i++) {
             var r = a[i].charCodeAt().toString(36);
-            var p = '';
             for(var j = 0; j < (2 - r.length); j++) {
                 b += '0';
             }
