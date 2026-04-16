@@ -1,8 +1,21 @@
-context_jUtils.add("base36", function() {
-    // refactor: use factory functions so that jUtils.init() doesn't produce an empty (useless) jUtils object
-    return function(action, str) {
-        if(!(typeof action == "string" && typeof str == "string")) {
-            console.error("One or more of the arguments is invalid. Please refer to base36's documentation.")
+context_jUtils.add("base36", function(action, str) {
+    if(!(typeof action == "string" && typeof str == "string")) {
+        console.error("One or more of the arguments is invalid. Please refer to base36's documentation.")
+        return false;
+    }
+    if(action == "encode") {
+        var a = str.split("");
+        var b = "";
+        for(var i = 0; i < a.length; i++) {
+            var r = a[i].charCodeAt().toString(36);
+            for(var j = 0; j < (2 - r.length); j++) {
+                b += '0';
+            }
+            b += r
+        }
+        return b;
+    } else if(action == "decode") {
+        if((str.length % 2) > 0) {
             return false;
         }
         if(action == "encode") {
