@@ -1,3 +1,8 @@
+# Licensing info for line 51
+# Source - https://stackoverflow.com/a/63619526
+# Posted by Eshanel, modified by community. See post 'Timeline' for change history
+# Retrieved 2026-04-16, License - CC BY-SA 4.0
+
 name: Build
 
 on:
@@ -48,11 +53,7 @@ jobs:
         with:
           tag_name: ${{ steps.tag.outputs.tag }}
           name: Release ${{ steps.tag.outputs.tag }} (version ${{ steps.tag.outputs.version }})
-          body: |
-# Source - https://stackoverflow.com/a/63619526
-# Posted by Eshanel, modified by community. See post 'Timeline' for change history
-# Retrieved 2026-04-16, License - CC BY-SA 4.0
-            ${{ github.event.head_commit.message }}
+          body: ${{ github.event.head_commit.message }}
 
           files: build/*
         env:
